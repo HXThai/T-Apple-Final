@@ -209,7 +209,7 @@ const PersonalDetail = () => {
                     <Text
                       style={{
                         color: '#FFFFFF',
-                        fontFamily: 'Nunito',
+                        // fontFamily: 'Nunito',
                         fontSize: 16,
                       }}>
                       Lưu

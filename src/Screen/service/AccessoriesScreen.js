@@ -75,7 +75,7 @@ const Product = (props) => {
 
   const getData = (id, page) => {
     services
-      .getListAccessories({id: id, page: page})
+      .getListAccessories(null, id, page)
       .then(function (response) {
         // props.onGetList(response?.data);
         if (response) {
@@ -160,7 +160,8 @@ const Product = (props) => {
           {/* <Text style={[styles.text, {fontSize: 12, color: 'gray'}]}>
                     Ram: {item.attribute.ram} - Rom: {item.attribute.rom}
                   </Text> */}
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
             <View
               style={{
                 flex: 1,
@@ -168,13 +169,13 @@ const Product = (props) => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
               }}>
-              <Text style={[styles.text, {fontWeight: 'bold'}]}>
+              <Text style={[styles.text, {fontWeight: 'bold', fontSize: 12}]}>
                 {styles.dynamicSort(item.price_sale)} đ
               </Text>
               <Text
                 style={[
                   styles.text,
-                  {textDecorationLine: 'line-through', fontSize: 12},
+                  {textDecorationLine: 'line-through', fontSize: 11},
                 ]}>
                 {styles.dynamicSort(item.price)} đ
               </Text>

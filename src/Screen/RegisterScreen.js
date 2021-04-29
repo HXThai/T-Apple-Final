@@ -66,7 +66,7 @@ const RegisterScreen = (props) => {
                             height: 40,
                             color: '#000000',
                             marginLeft: 5,
-                            fontFamily: 'Nunito',
+                            // fontFamily: 'Nunito',
                           }}
                           placeholder="Họ và tên"
                           placeholderTextColor="gray"
@@ -83,7 +83,7 @@ const RegisterScreen = (props) => {
                             height: 40,
                             color: '#000000',
                             marginLeft: 5,
-                            fontFamily: 'Nunito',
+                            // fontFamily: 'Nunito',
                           }}
                           placeholder="Số điện thoại"
                           placeholderTextColor="gray"
@@ -104,7 +104,7 @@ const RegisterScreen = (props) => {
                             height: 40,
                             color: '#000000',
                             marginLeft: 5,
-                            fontFamily: 'Nunito',
+                            // fontFamily: 'Nunito',
                           }}
                           placeholder="Mật khẩu"
                           placeholderTextColor="gray"
@@ -121,7 +121,7 @@ const RegisterScreen = (props) => {
                             height: 40,
                             color: '#000000',
                             marginLeft: 5,
-                            fontFamily: 'Nunito',
+                            // fontFamily: 'Nunito',
                           }}
                           placeholder="Nhập lại mật khẩu"
                           placeholderTextColor="gray"
@@ -199,7 +199,7 @@ const RegisterScreen = (props) => {
                             <Text
                               style={{
                                 color: '#FFFFFF',
-                                fontFamily: 'Nunito',
+                                // fontFamily: 'Nunito',
                                 fontSize: 14,
                               }}>
                               ĐĂNG KÝ
@@ -217,7 +217,7 @@ const RegisterScreen = (props) => {
                       }}>
                       <Text
                         style={{
-                          fontSize: 'Nunito',
+                          // fontSize: 'Nunito',
                           fontSize: 14,
                           color: 'gray',
                           textDecorationLine: 'underline',
@@ -232,7 +232,7 @@ const RegisterScreen = (props) => {
                         <Text
                           style={{
                             fontSize: 14,
-                            fontFamily: 'Nunito',
+                            // fontFamily: 'Nunito',
                             color: Color.main,
                             textDecorationLine: 'underline',
                           }}>
@@ -241,7 +241,7 @@ const RegisterScreen = (props) => {
                       </TouchableOpacity>
                       <Text
                         style={{
-                          fontSize: 'Nunito',
+                          // fontSize: 'Nunito',
                           fontSize: 14,
                           color: 'gray',
                           textDecorationLine: 'underline',

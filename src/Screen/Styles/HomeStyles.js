@@ -53,13 +53,13 @@ export default StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    fontFamily: 'Nunito',
+    // fontFamily: 'Nunito',
     color: '#111111',
   },
   title: {
     fontSize: 16,
     color: Color.main,
-    fontFamily: 'Nunito',
+    // fontFamily: 'Nunito',
   },
   view: {
     shadowColor: '#000',

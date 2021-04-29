@@ -9,6 +9,7 @@ import {
   ImageBackground,
   Dimensions,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -20,6 +21,7 @@ import Color from '../../Theme/Color';
 import {connect} from 'react-redux';
 import * as actions from '../../Redux/Action/serviceAction';
 import services from '../../Redux/Service/service';
+import reactotron from 'reactotron-react-native';
 
 const Product = (props) => {
   const [tab, setTab] = useState(0);
@@ -61,15 +63,20 @@ const Product = (props) => {
 
   const getData = (id, page) => {
     services
-      .getListService({id: id, page: page})
+      .getListService(null, id, page)
       .then(function (response) {
         // props.onGetList(response?.data);
         if (response) {
-          // console.log(response);
+          reactotron.log('thai', response);
           if (response.data.status_code === 200) {
             // setDataProduct(response?.data?.data?.data);
-            console.log(response.data.data.data);
+            // console.log(response.data.data.data);
             setDataProduct((prev) => [...prev, ...response?.data?.data?.data]);
+          } else {
+            Alert.alert('Thông báo!', response.data.message, [
+              {text: 'Đồng ý'},
+            ]);
+            return;
           }
         } else {
           Alert.alert('Thông báo!', 'Lỗi!', [{text: 'Đồng ý'}]);
@@ -83,7 +90,7 @@ const Product = (props) => {
   };
 
   const getCategories = () => {
-    services.getCategoriesService({}).then(function (response) {
+    services.getCategoriesService(null).then(function (response) {
       // props.onGetList(response?.data);
       if (response) {
         // console.log(response);
@@ -135,10 +142,12 @@ const Product = (props) => {
           <Text numberOfLines={1} style={[styles.text, {fontWeight: '700'}]}>
             {item?.title}{' '}
           </Text>
-          <Text style={[styles.text, {fontSize: 12, color: 'gray'}]}>
+          <Text
+            style={[styles.text, {fontSize: 12, color: 'gray', marginTop: 5}]}>
             Ram: {item?.attribute?.ram} - Rom: {item?.attribute?.rom}
           </Text>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
             <View
               style={{
                 flex: 1,
@@ -146,13 +155,13 @@ const Product = (props) => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
               }}>
-              <Text style={[styles.text, {fontWeight: 'bold'}]}>
+              <Text style={[styles.text, {fontWeight: 'bold', fontSize: 12}]}>
                 {styles.dynamicSort(item?.price_sale)} đ
               </Text>
               <Text
                 style={[
                   styles.text,
-                  {textDecorationLine: 'line-through', fontSize: 12},
+                  {textDecorationLine: 'line-through', fontSize: 11},
                 ]}>
                 {styles.dynamicSort(item?.price)} đ
               </Text>

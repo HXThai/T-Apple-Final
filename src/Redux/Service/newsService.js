@@ -8,8 +8,8 @@ const newsService = {
     // console.log(response);
     return response;
   },
-  getListNewsHightlight: async (params) => {
-    let url = `${API_BASE_URL.GET_LIST_NEWS_HIGHLIGHT}&limit=${params.limit}`;
+  getListNewsHightlight: async (params, limit) => {
+    let url = `${API_BASE_URL.GET_LIST_NEWS_HIGHLIGHT}&limit=${limit}`;
     let response = callApiService.get(url, params);
     // console.log(response);
     return response;

@@ -8,6 +8,8 @@ import {
   ScrollView,
   Alert,
   ActivityIndicator,
+  useWindowDimensions,
+  Dimensions,
 } from 'react-native';
 import styles from '../Styles/ProductDetailStyle';
 import Images from '../../Theme/Images';
@@ -17,6 +19,7 @@ import Swiper from 'react-native-swiper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import services from '../../Redux/Service/service';
 import storage from './../asyncStorage/Storage';
+import HTML from 'react-native-render-html';
 
 const Content = ({title, content}) => {
   return (
@@ -32,8 +35,9 @@ const ProductDetail = (props) => {
   const [checkBTS, setCheckBTS] = useState(0);
   const [typeSelected, setTypeSelected] = useState(0);
   const [numberProduct, setNumberProduct] = useState(1);
-
+  const contentWidth = useWindowDimensions().width;
   const [data, setdata] = useState([]);
+  const [modalVisibleLoading, setModalVisibleLoading] = useState(false);
 
   const service_param = props?.route?.params?.service_param || null;
 
@@ -41,15 +45,8 @@ const ProductDetail = (props) => {
 
   const [dataCart, setDataCart] = useState([]);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const res = await services.getListServiceDetail(service_param);
-  //     setdata(res.data.data);
-  //     // console.log(res.data.data);
-  //   })();
-  // }, []);
-
   useEffect(() => {
+    setModalVisibleLoading(true);
     services
       .getListServiceDetail(service_param)
       .then(function (response) {
@@ -58,6 +55,7 @@ const ProductDetail = (props) => {
           // console.log(response);
           if (response.data.status_code === 200) {
             setdata(response.data.data);
+            setModalVisibleLoading(false);
           }
         } else {
           Alert.alert('Thông báo!', 'Lỗi!', [{text: 'Đồng ý'}]);
@@ -81,115 +79,125 @@ const ProductDetail = (props) => {
 
   return (
     <View style={checkBTS === 0 ? styles.container : styles.containerHint}>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        {isLoading && <ActivityIndicator size="large" color={Color.main} />}
-      </View>
-      <ScrollView showsVerticalScrollIndicator={false} style={{padding: 15}}>
-        <View>
-          {/* <View style={{alignItems: 'center'}}>
-            <Image
-              source={{uri: dataProductDetail.image}}
-              style={{height: 200, width: 200}}
-            />
-          </View> */}
-          <Swiper
-            style={{height: 250}}
-            loop={false}
-            showsButtons={false}
-            activeDotColor={Color.main}>
+      {modalVisibleLoading === true ? (
+        <View
+          style={{
+            height: Dimensions.get('window').height,
+            width: Dimensions.get('window').width,
+            position: 'absolute',
+            borderRadius: 10,
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <ActivityIndicator size="large" color={Color.main} />
+        </View>
+      ) : null}
+      {modalVisibleLoading === false ? (
+        <ScrollView showsVerticalScrollIndicator={false} style={{padding: 15}}>
+          <View>
+            <Swiper
+              style={{height: 250}}
+              loop={false}
+              showsButtons={false}
+              activeDotColor={Color.main}>
+              <View
+                testID="Hello"
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  // backgroundColor: '#9DD6EB',
+                  height: 250,
+                  width: '100%',
+                }}>
+                <Image
+                  // source={dataProductDetail.image}
+                  // resizeMode="contain"
+                  source={{uri: data.image}}
+                  style={{height: 250, width: 200}}
+                />
+              </View>
+            </Swiper>
             <View
-              testID="Hello"
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                // backgroundColor: '#9DD6EB',
-                height: 250,
-                width: '100%',
-              }}>
-              <Image
-                // source={dataProductDetail.image}
-                // resizeMode="contain"
-                source={{uri: data.image}}
-                style={{height: 250, width: 200}}
-              />
-            </View>
-          </Swiper>
-          <View
-            style={[
-              styles.row,
-              {
-                borderBottomWidth: 1,
-                borderBottomColor: '#11111150',
-                paddingBottom: 10,
-              },
-            ]}>
-            <Text style={[styles.title, {color: '#111', flex: 1}]}>
-              {data?.title}
-            </Text>
-            {/* <TouchableOpacity
+              style={[
+                styles.row,
+                {
+                  borderBottomWidth: 1,
+                  borderBottomColor: '#11111150',
+                  paddingBottom: 10,
+                },
+              ]}>
+              <Text style={[styles.title, {color: '#111', flex: 1}]}>
+                {data?.title}
+              </Text>
+              {/* <TouchableOpacity
               onPress={() => props.navigation.navigate('CartScreen')}>
               <Image source={Images.addOrder} />
             </TouchableOpacity> */}
-          </View>
-          <Content title="Danh mục:" content={data?.category_name} />
-          {/* <Content title="Số lượng:" content={dataProductDetail.number} /> */}
-          <Content
-            title="Giá bán:"
-            content={styles.dynamicSort(data?.price) + ' đ'}
-          />
-          <Content
-            title="Giá khuyến mãi:"
-            content={styles.dynamicSort(data?.price_sale) + ' đ'}
-          />
-          <View
-            style={{
-              flexDirection: 'row',
-              marginTop: 15,
-              alignItems: 'center',
-            }}>
-            <View style={{height: 35, marginRight: 10}}>
-              <Content
-                title="Số lượng:"
-                // content={styles.dynamicSort(dataProductDetail.amount)}
-              />
             </View>
+            <Content title="Danh mục:" content={data?.category_name} />
+            {/* <Content title="Số lượng:" content={dataProductDetail.number} /> */}
+            <Content
+              title="Giá bán:"
+              content={styles.dynamicSort(data?.price) + ' đ'}
+            />
+            <Content
+              title="Giá khuyến mãi:"
+              content={styles.dynamicSort(data?.price_sale) + ' đ'}
+            />
             <View
               style={{
                 flexDirection: 'row',
+                marginTop: 15,
                 alignItems: 'center',
               }}>
-              <TouchableOpacity
-                onPress={() =>
-                  numberProduct <= 1
-                    ? null
-                    : setNumberProduct(numberProduct - 1)
-                }
+              <View style={{height: 35, marginRight: 10}}>
+                <Content
+                  title="Số lượng:"
+                  // content={styles.dynamicSort(dataProductDetail.amount)}
+                />
+              </View>
+              <View
                 style={{
-                  width: 35,
-                  height: 35,
-                  backgroundColor: '#F0E9E9',
+                  flexDirection: 'row',
                   alignItems: 'center',
-                  justifyContent: 'center',
                 }}>
-                <MaterialIcons name={'remove'} size={20} color={Color.price} />
-              </TouchableOpacity>
-              <Text style={{fontSize: 20, marginLeft: 30, marginRight: 30}}>
-                {numberProduct}
-              </Text>
-              <TouchableOpacity
-                onPress={() => setNumberProduct(numberProduct + 1)}
-                style={{
-                  width: 35,
-                  height: 35,
-                  backgroundColor: '#F0E9E9',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <MaterialIcons name={'add'} size={20} color={Color.price} />
-              </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    numberProduct <= 1
+                      ? null
+                      : setNumberProduct(numberProduct - 1)
+                  }
+                  style={{
+                    width: 35,
+                    height: 35,
+                    backgroundColor: '#F0E9E9',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <MaterialIcons
+                    name={'remove'}
+                    size={20}
+                    color={Color.price}
+                  />
+                </TouchableOpacity>
+                <Text style={{fontSize: 20, marginLeft: 30, marginRight: 30}}>
+                  {numberProduct}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => setNumberProduct(numberProduct + 1)}
+                  style={{
+                    width: 35,
+                    height: 35,
+                    backgroundColor: '#F0E9E9',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <MaterialIcons name={'add'} size={20} color={Color.price} />
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-          {/* <Text
+            {/* <Text
             style={{
               color: 'black',
               marginTop: 20,
@@ -201,36 +209,40 @@ const ProductDetail = (props) => {
             }}>
             Thông số kỹ thuật
           </Text> */}
-          {/* <Content
+            {/* <Content
             title="Công nghệ màn hình:"
             content={data.attribute.monitors}
           /> */}
-          {/* <Content title="Hệ điều hành:" content={data.attribute.system} />
+            {/* <Content title="Hệ điều hành:" content={data.attribute.system} />
           <Content title="Camera:" content={data.attribute.camera} />
           <Content title="CPU:" content={data.attribute.cpu} />
           <Content title="Ram:" content={data.attribute.ram} />
           <Content title="Bộ nhớ trong:" content={data.attribute.rom} />
           <Content title="Dung lượng pin:" content={data.attribute.battery} /> */}
-          <Text
-            style={{
-              color: 'black',
-              marginTop: 20,
-              fontWeight: '700',
-              fontSize: 15,
-              borderBottomWidth: 1,
-              borderBottomColor: '#11111150',
-              paddingBottom: 10,
-            }}>
-            Giới thiệu
-          </Text>
-          <Text style={{color: 'black', fontSize: 14, marginTop: 10}}>
-            {data.description}
-          </Text>
-          <Text style={[styles.text, {marginTop: 10, marginBottom: 25}]}>
-            {data.content}
-          </Text>
-        </View>
-      </ScrollView>
+            <Text
+              style={{
+                color: 'black',
+                marginTop: 20,
+                fontWeight: '700',
+                fontSize: 15,
+                borderBottomWidth: 1,
+                borderBottomColor: '#11111150',
+                paddingBottom: 10,
+              }}>
+              Giới thiệu
+            </Text>
+            <Text style={{color: 'black', fontSize: 14}}>
+              <HTML
+                source={{html: data?.description}}
+                contentWidth={contentWidth}
+              />
+            </Text>
+            <Text style={[styles.text, {marginTop: 10, marginBottom: 25}]}>
+              {data.content}
+            </Text>
+          </View>
+        </ScrollView>
+      ) : null}
       <TouchableOpacity
         onPress={() => {
           Alert.alert(
@@ -245,7 +257,7 @@ const ProductDetail = (props) => {
                     data: data,
                     product_amount: numberProduct,
                   });
-                  console.log(dataCart);
+                  // console.log(dataCart);
                   storage.setItem('dataCart', dataCart);
                   props.navigation.navigate('CartScreen');
                 },

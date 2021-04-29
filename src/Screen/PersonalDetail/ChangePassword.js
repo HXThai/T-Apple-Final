@@ -116,7 +116,7 @@ const ChangePassword = () => {
               <Text
                 style={{
                   color: '#FFFFFF',
-                  fontFamily: 'Nunito',
+                  // fontFamily: 'Nunito',
                   fontSize: 14,
                 }}>
                 Đổi mật khẩu

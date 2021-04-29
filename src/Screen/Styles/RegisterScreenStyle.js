@@ -21,7 +21,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   configTextLogin: {
-    fontFamily: 'Nunito',
+    // fontFamily: 'Nunito',
     fontSize: 20,
     fontWeight: 'bold',
     lineHeight: 25,

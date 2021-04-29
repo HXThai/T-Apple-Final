@@ -51,7 +51,7 @@ const Feedback = (props) => {
               <Text
                 style={{
                   color: '#FFFFFF',
-                  fontFamily: 'Nunito',
+                  // fontFamily: 'Nunito',
                   fontSize: 16,
                 }}>
                 Gửi

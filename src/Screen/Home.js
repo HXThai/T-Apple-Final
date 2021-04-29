@@ -8,6 +8,7 @@ import {
   Dimensions,
   AppState,
   Linking,
+  Alert,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import color from '../Theme/Color';
@@ -31,6 +32,7 @@ import * as actionsService_highlight from '../Redux/Action/service_highlightActi
 
 import moment from 'moment';
 import services from '../Redux/Service/service';
+import salesService from '../Redux/Service/saleService';
 import {connect} from 'react-redux';
 
 // import Reactotron from 'reactotron-react-native';
@@ -90,43 +92,45 @@ const Home = (props) => {
 
   useEffect(() => {
     (async () => {
-      const res = await services.getListAccessoriesHighlight({limit: 4});
+      const res = await services.getListAccessoriesHighlight(null, 4);
       setDataAccessories(res.data.data);
       // console.log('thaimeo', res.data.data);
     })();
   }, []);
 
   const [modalVisible, setModalVisible] = useState(false);
-  //   useEffect(() => {
-  //     setTimeout(() => {
-  //       props.navigation.navigate('ChooseCityScreen');
-  //     }, 3000);
-  //   }, []);
 
   useEffect(() => {
     setModalVisible(true);
-    // const [checkAppState, setCheckAppState] = useState('');
-    // console.log('thai');
     AppState.addEventListener('change', (state) => {
       // console.log(state);
       if (state === 'active') {
-        // const checkAppState = await AsyncStorage.getItem('checkAppState');
-        // if (checkAppState === 'background') {
-        //   setModalVisible(false);
-        // } else setModalVisible(true);
       } else if (state === 'background') {
         // setCheckAppState(state)
       } else if (state === 'inactive') {
         // do that other thing
       }
     });
-    // if(checkAppState === 'background'){await AsyncStorage.setItem(
-    //   'checkAppState', 'background'
-    //   ,
-    // );}
   }, []);
 
-  const salesData = props.dataSale.responseSales;
+  // const salesData = props.dataSale.responseSalesHighLight;
+
+  const [salesData, setSalesData] = useState([]);
+
+  useEffect(() => {
+    salesService.getListSalesHightlight(null, 3).then(function (response) {
+      if (response) {
+        // console.log('thai', response.data.data);
+        if (response.data.status_code === 200) {
+          setSalesData(response.data.data.data);
+        }
+      } else {
+        Alert.alert('Thông báo!', 'Lỗi!', [{text: 'Đồng ý'}]);
+        return;
+      }
+    });
+  }, []);
+
   // console.log('sale', salesData);
   useEffect(() => {
     props.onGetListSales_hightlight({limit: 3});
@@ -140,8 +144,9 @@ const Home = (props) => {
   }, [props.onGetListService_highlight]);
 
   const newsData = props.dataNews.responseDataNewsHighlight;
+  // console.log(props.dataNews.responseDataNewsHighlight);
   useEffect(() => {
-    props.onGetListNewsHighlight({limit: 3});
+    props.onGetListNewsHighlight(null, 3);
   }, [props.onGetListNewsHighlight]);
 
   // console.log('thai', service_highlight);
@@ -332,9 +337,7 @@ const Home = (props) => {
                               width: '80%',
                               justifyContent: 'center',
                             }}>
-                            <Text style={{fontSize: 12, fontFamily: 'Nunito'}}>
-                              {item.titleTop}
-                            </Text>
+                            <Text style={{fontSize: 12}}>{item.titleTop}</Text>
                           </View>
                         </TouchableOpacity>
                       );
@@ -361,7 +364,7 @@ const Home = (props) => {
                         {
                           fontSize: 18,
                           color: Color.main,
-                          fontFamily: 'Nunito',
+                          // fontFamily: 'Nunito',
                           fontWeight: 'bold',
                         })
                       }>
@@ -375,7 +378,7 @@ const Home = (props) => {
                           {
                             fontStyle: 'italic',
                             fontSize: 14,
-                            fontFamily: 'Nunito',
+                            // fontFamily: 'Nunito',
                             color: '#111111',
                           })
                         }>
@@ -393,7 +396,7 @@ const Home = (props) => {
                     <ScrollView
                       horizontal={true}
                       showsHorizontalScrollIndicator={false}>
-                      {salesData?.data?.data?.map((item, index) => {
+                      {salesData?.map((item, index) => {
                         return (
                           <TouchableOpacity
                             onPress={() => {
@@ -465,7 +468,7 @@ const Home = (props) => {
                         {
                           fontSize: 18,
                           color: Color.main,
-                          fontFamily: 'Nunito',
+                          // fontFamily: 'Nunito',
                           fontWeight: 'bold',
                         })
                       }>
@@ -481,7 +484,7 @@ const Home = (props) => {
                           {
                             fontStyle: 'italic',
                             fontSize: 14,
-                            fontFamily: 'Nunito',
+                            // fontFamily: 'Nunito',
                             color: '#111111',
                           })
                         }>
@@ -590,7 +593,7 @@ const Home = (props) => {
                         {
                           fontSize: 18,
                           color: Color.main,
-                          fontFamily: 'Nunito',
+                          // fontFamily: 'Nunito',
                           fontWeight: 'bold',
                         })
                       }>
@@ -606,7 +609,7 @@ const Home = (props) => {
                           {
                             fontStyle: 'italic',
                             fontSize: 14,
-                            fontFamily: 'Nunito',
+                            // fontFamily: 'Nunito',
                             color: '#111111',
                           })
                         }>
@@ -712,7 +715,7 @@ const Home = (props) => {
                         {
                           fontSize: 18,
                           color: Color.main,
-                          fontFamily: 'Nunito',
+                          // fontFamily: 'Nunito',
                           fontWeight: 'bold',
                         })
                       }>
@@ -728,7 +731,7 @@ const Home = (props) => {
                           {
                             fontStyle: 'italic',
                             fontSize: 14,
-                            fontFamily: 'Nunito',
+                            // fontFamily: 'Nunito',
                             color: '#111111',
                           })
                         }>
@@ -785,7 +788,10 @@ const Home = (props) => {
                             <Text
                               style={[
                                 styles.title,
-                                {color: '#111', width: '85%'},
+                                {
+                                  color: '#111',
+                                  width: Dimensions.get('window').width * 0.6,
+                                },
                               ]}
                               numberOfLines={1}>
                               {item.title}

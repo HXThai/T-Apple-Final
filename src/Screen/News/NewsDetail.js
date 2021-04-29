@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ImageBackground,
+  useWindowDimensions,
 } from 'react-native';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -18,10 +19,12 @@ import Color from '../../Theme/Color';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHistory} from '@fortawesome/free-solid-svg-icons';
 import services from '../../Redux/Service/newsService';
+import HTML from 'react-native-render-html';
 
 const NewsDetail = (props) => {
   const [data, setdata] = useState([]);
   const news_param = props?.route?.params?.news_param || null;
+  const contentWidth = useWindowDimensions().width;
 
   useEffect(() => {
     (async () => {
@@ -58,7 +61,7 @@ const NewsDetail = (props) => {
           />
           <Text style={{fontWeight: '700'}}>{data.created_at}</Text>
         </View>
-        <Text style={{marginBottom: 25}}>{data.content}</Text>
+        <HTML source={{html: data?.content}} contentWidth={contentWidth} />
       </ScrollView>
     </View>
   );

@@ -2,9 +2,9 @@ import {API_BASE_URL, ROOT_DOMAIN} from '../../Constants/url.constant';
 import callApiService from '../../utils/callAPI.service';
 
 const service = {
-  getListService: async (params) => {
-    let url = `${API_BASE_URL.GET_LIST_SERVICE}?category_id=${params.id}&page=${params.page}&type=1`;
-    console.log(url);
+  getListService: async (params, id, page) => {
+    let url = `${API_BASE_URL.GET_LIST_SERVICE}?category_id=${id}&page=${page}&type=1`;
+    console.log('thai', url);
     let response = callApiService.get(url, params);
     // console.log(params);
     return response;
@@ -25,8 +25,8 @@ const service = {
     let response = callApiService.get(url);
     return response;
   },
-  getListAccessoriesHighlight: async (params) => {
-    let url = `${API_BASE_URL.GET_LIST_SERVICE_HIGHLIGHT}&limit=${params.limit}&type=2`;
+  getListAccessoriesHighlight: async (params, limit) => {
+    let url = `${API_BASE_URL.GET_LIST_SERVICE_HIGHLIGHT}&limit=${limit}&type=2`;
     let response = callApiService.get(url);
     return response;
   },
@@ -35,8 +35,8 @@ const service = {
     let response = callApiService.get(url);
     return response;
   },
-  getListAccessories: async (params) => {
-    let url = `${API_BASE_URL.GET_LIST_SERVICE}?category_id=${params.id}&page=${params.page}&type=2`;
+  getListAccessories: async (params, id, page) => {
+    let url = `${API_BASE_URL.GET_LIST_SERVICE}?category_id=${id}&page=${page}&type=2`;
     let response = callApiService.get(url, params);
     // console.log(params);
     return response;

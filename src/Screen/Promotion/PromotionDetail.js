@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ImageBackground,
+  useWindowDimensions,
 } from 'react-native';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -19,15 +20,17 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHistory} from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import services from '../../Redux/Service/saleService';
+import HTML from 'react-native-render-html';
 
 const PromotionDetail = (props) => {
   const [data, setdata] = useState([]);
   const sales_param = props?.route?.params?.sales_param || null;
+  const contentWidth = useWindowDimensions().width;
 
   useEffect(() => {
     (async () => {
       const res = await services.getListSalesDetail(sales_param);
-      console.log('sale', res.data.data);
+      // console.log('sale', res.data.data);
       setdata(res.data.data);
     })();
   }, []);
@@ -60,7 +63,7 @@ const PromotionDetail = (props) => {
             <Text>Hạn áp dụng: </Text>
             <Text style={{fontWeight: '700'}}>{data.end_at}</Text>
           </View>
-          <Text style={{marginBottom: 25}}>{data.content}</Text>
+          <HTML source={{html: data?.content}} contentWidth={contentWidth} />
         </View>
       </ScrollView>
     </View>

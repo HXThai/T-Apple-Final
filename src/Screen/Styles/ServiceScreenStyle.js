@@ -7,13 +7,13 @@ export default StyleSheet.create({
   ...AppStyles,
   text: {
     fontSize: 14,
-    fontFamily: 'Nunito',
+    // fontFamily: 'Nunito',
     color: '#111111',
   },
   title: {
     fontSize: 16,
     color: '#111111',
-    fontFamily: 'Nunito',
+    // fontFamily: 'Nunito',
   },
   viewItem: {
     // borderBottomColor: '#11111150',

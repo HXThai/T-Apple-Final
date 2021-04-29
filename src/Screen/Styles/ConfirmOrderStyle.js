@@ -6,13 +6,13 @@ export default StyleSheet.create({
   text: {
     fontSize: 14,
     fontWeight: '700',
-    fontFamily: 'Nunito',
+    // fontFamily: 'Nunito',
     color: '#111111',
   },
   title: {
     fontSize: 16,
     color: '#111111',
-    fontFamily: 'Nunito',
+    // fontFamily: 'Nunito',
     fontWeight: '700',
   },
   row: {

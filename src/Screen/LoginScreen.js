@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Images from '../Theme/Images';
@@ -18,11 +19,13 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Logo from '../Theme/svg/logo3.svg';
 import signInService from '../Redux/Service/signInService';
 import storage from '../Screen/asyncStorage/Storage';
+import Modal from 'react-native-modal';
 
 const LoginScreen = (props) => {
-  const [phone, onChanePhone] = useState('');
-  const [password, setPassword] = useState('');
+  const [phone, onChanePhone] = useState('0354525557');
+  const [password, setPassword] = useState('password');
   const [displayPassword, setDisplayPassword] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const onLogin = (phone, password) => {
     // props.navigation.navigate('TabNav');
@@ -35,8 +38,9 @@ const LoginScreen = (props) => {
       .then(async function (response) {
         // console.log(response);
         if (response) {
-          console.log(response);
+          // console.log(response);
           if (response?.data?.status_code === 200) {
+            setModalVisible(false);
             storage.setItem('dataLogin', {
               phone: phone,
               password: password,
@@ -49,7 +53,14 @@ const LoginScreen = (props) => {
             Alert.alert(
               'Thông báo',
               'Số điện thoại hoặc mật khẩu không chính xác!',
-              [{text: 'OK', onPress: () => {}}],
+              [
+                {
+                  text: 'OK',
+                  onPress: () => {
+                    setModalVisible(false);
+                  },
+                },
+              ],
               {cancelable: false},
             );
           }
@@ -57,7 +68,14 @@ const LoginScreen = (props) => {
           Alert.alert(
             'Thông báo',
             'Số điện thoại hoặc mật khẩu không chính xác!',
-            [{text: 'OK', onPress: () => {}}],
+            [
+              {
+                text: 'OK',
+                onPress: () => {
+                  setModalVisible(false);
+                },
+              },
+            ],
             {cancelable: false},
           );
         }
@@ -71,15 +89,24 @@ const LoginScreen = (props) => {
       end={{x: 1, y: 1}}
       style={{flex: 1}}>
       <SafeAreaView>
+        <Modal
+          style={{alignItems: 'center', justifyContent: 'center'}}
+          isVisible={modalVisible}>
+          <View
+            style={{
+              height: 70,
+              width: 70,
+              backgroundColor: '#fff',
+              borderRadius: 10,
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <ActivityIndicator size="large" color={Color.main} />
+          </View>
+        </Modal>
         <View style={styles.login}>
           <View style={styles.main}>
-            {/* <View>
-             <Image
-              source={Images.logoGiaTien}
-              resizeMode="contain"
-              style={{width: 106, height: 106}}
-            />
-          </View> */}
             <View style={{marginTop: 15}}>
               <Image
                 source={Images.logo}
@@ -102,7 +129,7 @@ const LoginScreen = (props) => {
                           height: 40,
                           color: '#000000',
                           // marginLeft: 5,
-                          fontFamily: 'Nunito',
+                          // fontFamily: 'Nunito',
                         }}
                         placeholder="Số điện thoại"
                         keyboardType="number-pad"
@@ -127,7 +154,7 @@ const LoginScreen = (props) => {
                     <TextInput
                       style={{
                         color: '#000000',
-                        fontFamily: 'Nunito',
+                        // fontFamily: 'Nunito',
                         width: '87%',
                         height: 40,
                       }}
@@ -171,7 +198,7 @@ const LoginScreen = (props) => {
                         <Text
                           style={{
                             fontSize: 14,
-                            fontFamily: 'Nunito',
+                            // fontFamily: 'Nunito',
                             color: '#111',
                           }}>
                           Quên mật khẩu?
@@ -181,6 +208,7 @@ const LoginScreen = (props) => {
                   </View>
                   <TouchableOpacity
                     onPress={() => {
+                      setModalVisible(true);
                       onLogin(phone, password);
                     }}
                     style={{
@@ -197,7 +225,7 @@ const LoginScreen = (props) => {
                         <Text
                           style={{
                             color: '#FFFFFF',
-                            fontFamily: 'Nunito',
+                            // fontFamily: 'Nunito',
                             fontSize: 14,
                           }}>
                           ĐĂNG NHẬP
@@ -214,7 +242,7 @@ const LoginScreen = (props) => {
                     }}>
                     <Text
                       style={{
-                        fontSize: 'Nunito',
+                        // fontSize: 'Nunito',
                         fontSize: 14,
                         color: 'gray',
                         textDecorationLine: 'underline',
@@ -229,7 +257,7 @@ const LoginScreen = (props) => {
                       <Text
                         style={{
                           fontSize: 14,
-                          fontFamily: 'Nunito',
+                          // fontFamily: 'Nunito',
                           color: Color.main,
                         }}>
                         Đăng ký{' '}
@@ -237,7 +265,7 @@ const LoginScreen = (props) => {
                     </TouchableOpacity>
                     <Text
                       style={{
-                        fontSize: 'Nunito',
+                        // fontSize: 'Nunito',
                         fontSize: 14,
                         color: 'gray',
                         textDecorationLine: 'underline',

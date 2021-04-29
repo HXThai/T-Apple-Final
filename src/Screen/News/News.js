@@ -61,7 +61,14 @@ const News = (props) => {
                 backgroundColor: '#fff',
                 marginTop: 10,
                 borderRadius: 8,
-                elevation: 8,
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 4,
+                },
+                shadowOpacity: 0.32,
+                shadowRadius: 5.46,
+                elevation: 4,
               }}>
               <Image
                 width={347}

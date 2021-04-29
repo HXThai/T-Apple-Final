@@ -59,7 +59,7 @@ const ForgotPasswordScreen = (props) => {
                             height: 40,
                             color: '#000000',
                             marginLeft: 5,
-                            fontFamily: 'Nunito',
+                            // fontFamily: 'Nunito',
                           }}
                           placeholder="Số điện thoại"
                           placeholderTextColor="gray"
@@ -73,7 +73,7 @@ const ForgotPasswordScreen = (props) => {
                             height: 40,
                             color: '#000000',
                             marginLeft: 5,
-                            fontFamily: 'Nunito',
+                            // fontFamily: 'Nunito',
                           }}
                           placeholder="Mật khẩu mới"
                           placeholderTextColor="gray"
@@ -87,7 +87,7 @@ const ForgotPasswordScreen = (props) => {
                             height: 40,
                             color: '#000000',
                             marginLeft: 5,
-                            fontFamily: 'Nunito',
+                            // fontFamily: 'Nunito',
                           }}
                           placeholder="Nhập lại mật khẩu"
                           placeholderTextColor="gray"
@@ -213,7 +213,7 @@ const ForgotPasswordScreen = (props) => {
                             <Text
                               style={{
                                 color: '#FFFFFF',
-                                fontFamily: 'Nunito',
+                                // fontFamily: 'Nunito',
                                 fontSize: 14,
                               }}>
                               XÁC NHÂN
@@ -231,7 +231,7 @@ const ForgotPasswordScreen = (props) => {
                       }}>
                       <Text
                         style={{
-                          fontSize: 'Nunito',
+                          // fontSize: 'Nunito',
                           fontSize: 14,
                           color: 'gray',
                           textDecorationColor: 'gray',
@@ -245,7 +245,7 @@ const ForgotPasswordScreen = (props) => {
                         <Text
                           style={{
                             fontSize: 14,
-                            fontFamily: 'Nunito',
+                            // fontFamily: 'Nunito',
                             color: Color.main,
                           }}>
                           0987875427

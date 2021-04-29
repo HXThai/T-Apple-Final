@@ -83,7 +83,7 @@ const SearchScreen = (props) => {
                   height: 40,
                   color: '#000000',
                   marginLeft: 5,
-                  fontFamily: 'Nunito',
+                  // fontFamily: 'Nunito',
                 }}
                 placeholder="Bạn cần tìm gì?"
                 placeholderTextColor="gray"

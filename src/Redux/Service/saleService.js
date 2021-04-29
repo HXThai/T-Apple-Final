@@ -7,10 +7,10 @@ const salesService = {
     let response = callApiService.get(url);
     return response;
   },
-  getListSalesHightlight: async (params) => {
-    let url = `${API_BASE_URL.GET_LIST_SALES_HIGHLIGHT}&limit=${params.limit}`;
+  getListSalesHightlight: async (params, limit) => {
+    let url = `${API_BASE_URL.GET_LIST_SALES_HIGHLIGHT}&limit=${limit}`;
     let response = callApiService.get(url, params);
-    // console.log('dataSaleHighlight', response);
+    console.log('dataSaleHighlight', url);
     return response;
   },
   getListSalesDetail: async (params) => {

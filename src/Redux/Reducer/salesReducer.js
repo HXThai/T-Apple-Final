@@ -5,6 +5,11 @@ const initialSalesState = {
   responseSales: null,
   loadingSales: false,
   msgSales: null,
+
+  isErrorSalesHighLight: false,
+  responseSalesHighLight: null,
+  loadingSalesHighLight: false,
+  msgSalesHighLight: null,
 };
 
 const salesReducer = (state = initialSalesState, action) => {
@@ -39,28 +44,28 @@ const salesReducer = (state = initialSalesState, action) => {
     case actions.ACTION_GET_SALES_HIGHLIGHT:
       return {
         ...state,
-        isErrorSales: false,
-        responseSales: null,
-        loadingSales: true,
-        msgSales: null,
+        isErrorSalesHighLight: false,
+        responseSalesHighLight: null,
+        loadingSalesHighLight: true,
+        msgSalesHighLight: null,
       };
 
     case actions.ACTION_GET_SALES_HIGHLIGHT_SUCCESS:
       return {
         ...state,
-        isErrorSales: false,
-        responseSales: action.payload,
-        loadingSales: false,
-        msgSales: null,
+        isErrorSalesHighLight: false,
+        responseSalesHighLight: action.payload,
+        loadingSalesHighLight: false,
+        msgSalesHighLight: null,
       };
 
     case actions.ACTION_GET_SALES_HIGHLIGHT_FAILD:
       return {
         ...state,
-        isErrorSales: true,
-        responseSales: null,
-        loadingSales: false,
-        msgSales: action.payload,
+        isErrorSalesHighLight: true,
+        responseSalesHighLight: null,
+        loadingSalesHighLight: false,
+        msgSalesHighLight: action.payload,
       };
     default:
       return state;

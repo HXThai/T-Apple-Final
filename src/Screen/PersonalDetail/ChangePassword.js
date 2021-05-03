@@ -30,6 +30,7 @@ const ChangePassword = () => {
               borderWidth: 1,
               borderRadius: 5,
               marginBottom: 15,
+              height: 40,
             }}
             placeholder="Mật khẩu cũ"
           />
@@ -55,6 +56,7 @@ const ChangePassword = () => {
               borderWidth: 1,
               borderRadius: 5,
               marginBottom: 15,
+              height: 40,
             }}
             placeholder="Mật khẩu mới"
           />
@@ -80,6 +82,7 @@ const ChangePassword = () => {
               borderWidth: 1,
               borderRadius: 5,
               marginBottom: 15,
+              height: 40,
             }}
             placeholder="Nhập lại mật khẩu mới"
           />

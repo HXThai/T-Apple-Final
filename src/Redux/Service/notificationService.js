@@ -9,6 +9,13 @@ const newsService = {
     // console.log(response);
     return response;
   },
+
+  getNotificationDetail: async (params, id) => {
+    let url = `${API_BASE_URL.GET_NOTIFICATION_DETAIL}/${id}/detail`;
+    let response = callApiService.get(url);
+    // console.log(response);
+    return response;
+  },
 };
 
 export default newsService;

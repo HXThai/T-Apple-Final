@@ -4,7 +4,7 @@ import {
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Dimensions, Image, Text, View, Alert} from 'react-native';
 import Images from '../Theme/Images';
 import Wallet from '../Theme/img/wallet.svg';
@@ -28,6 +28,18 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Color from '../Theme/Color';
 
 const Personal = (props) => {
+  const [dataUser, setDataUser] = useState({});
+
+  useEffect(() => {
+    storage.getItem('userLogin').then((data) => {
+      if (data) {
+        console.log(data);
+        setDataUser(data);
+      } else {
+      }
+    });
+  }, []);
+
   return (
     <LinearGradient
       colors={[Color.gradientStart, Color.gradientMiddle, Color.gradientEnd]}
@@ -47,7 +59,9 @@ const Personal = (props) => {
           <View style={{padding: 15}}>
             <TouchableOpacity
               onPress={() => {
-                props.navigation.navigate('PersonalDetail');
+                props.navigation.navigate('PersonalDetail', {
+                  dataUser: dataUser,
+                });
               }}
               style={{
                 width: '100%',
@@ -59,17 +73,22 @@ const Personal = (props) => {
               <View style={{flex: 1}}>
                 <Image
                   style={{width: 52, height: 52, borderRadius: 100}}
-                  source={Images.logo}
+                  source={{uri: dataUser.link_avatar}}
                   resizeMode="center"
                 />
               </View>
               <View
                 style={{flex: 5, height: 50, justifyContent: 'space-around'}}>
                 <Text
-                  style={{fontSize: 18, fontWeight: '700', color: '#112868'}}>
-                  Xuân Thái
+                  style={{
+                    fontSize: 18,
+                    fontWeight: '700',
+                    color: '#112868',
+                    marginLeft: 5,
+                  }}>
+                  {dataUser.name}
                 </Text>
-                <Text style={{fontSize: 14}}>Khách hàng_Vip</Text>
+                {/* <Text style={{fontSize: 14}}>Khách hàng_Vip</Text> */}
               </View>
               <View
                 style={{
@@ -80,28 +99,6 @@ const Personal = (props) => {
                 <FontAwesomeIcon icon={faChevronRight} />
               </View>
             </TouchableOpacity>
-
-            {/* <TouchableOpacity
-              onPress={() => {
-                props.navigation.navigate('Wallet');
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  // margin: 15,
-                  marginTop: 20,
-                  padding: 13,
-                  elevation: 3,
-                  backgroundColor: '#fff',
-                  marginBottom: 10,
-                  marginRight: 3,
-                  marginLeft: 3,
-                  borderRadius: 6,
-                }}>
-                <Wallet width={20} height={20} />
-                <Text style={{fontSize: 14, marginLeft: 10}}>Ví tiền</Text>
-              </View>
-            </TouchableOpacity> */}
 
             <TouchableOpacity
               onPress={() => {
@@ -253,7 +250,7 @@ const Personal = (props) => {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{
                 flexDirection: 'row',
                 // margin: 15,
@@ -275,7 +272,7 @@ const Personal = (props) => {
               }}>
               <Share width={20} height={20} />
               <Text style={{fontSize: 14, marginLeft: 10}}>Chia sẻ</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity
               onPress={() => {

@@ -14,6 +14,10 @@ const SplashScreen = (props) => {
       storage.getItem('userLogin').then((data) => {
         if (data) {
           props.navigation.navigate('TabNav');
+          props.navigation.reset({
+            index: 0,
+            routes: [{name: 'TabNav'}],
+          });
         } else {
           props.navigation.navigate('LoginScreen');
         }

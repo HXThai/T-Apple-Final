@@ -13,7 +13,7 @@ import styles from '../Styles/ServiceDetailStyle';
 const Feedback = (props) => {
   return (
     <View style={styles.container}>
-      <View style={{padding: 15, alignItems: 'center'}}>
+      <View style={{padding: 10, alignItems: 'center'}}>
         <Text style={{fontSize: 14, fontWeight: '700', marginBottom: 25}}>
           Đánh giá dịch vụ đang sử dụng
         </Text>
@@ -27,36 +27,36 @@ const Feedback = (props) => {
             height: 110,
             justifyContent: 'flex-start',
             textAlignVertical: 'top',
-            marginVertical: 15,
+            // marginVertical: 15,
             borderRadius: 10,
+            padding: 10,
           }}
         />
 
-        <TouchableOpacity style={{}}>
+        <TouchableOpacity
+          style={{
+            width: 92,
+            height: 40,
+            backgroundColor: Color.main,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 8,
+            marginTop: 10,
+          }}>
           <View
             style={{
-              width: 92,
-              height: 40,
-              backgroundColor: Color.main,
-              alignItems: 'center',
+              flexDirection: 'column',
+              height: 28,
               justifyContent: 'center',
-              borderRadius: 8,
             }}>
-            <View
+            <Text
               style={{
-                flexDirection: 'column',
-                height: 28,
-                justifyContent: 'center',
+                color: '#FFFFFF',
+                // fontFamily: 'Nunito',
+                fontSize: 16,
               }}>
-              <Text
-                style={{
-                  color: '#FFFFFF',
-                  // fontFamily: 'Nunito',
-                  fontSize: 16,
-                }}>
-                Gửi
-              </Text>
-            </View>
+              Gửi
+            </Text>
           </View>
         </TouchableOpacity>
       </View>

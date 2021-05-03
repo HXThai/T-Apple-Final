@@ -79,7 +79,9 @@ const NotificationScreen = (props) => {
                 return (
                   <TouchableOpacity
                     onPress={() => {
-                      props.navigation.navigate('NotificationDetailScreen');
+                      props.navigation.navigate('NotificationDetailScreen', {
+                        item: item,
+                      });
                     }}
                     key={index}
                     style={{
@@ -144,7 +146,7 @@ const NotificationScreen = (props) => {
                       <Text
                         style={[styles.title, {color: '#111'}]}
                         numberOfLines={1}>
-                        {item.create_at}
+                        {item.created_at}
                       </Text>
                     </View>
                   </TouchableOpacity>

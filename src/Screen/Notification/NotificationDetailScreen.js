@@ -24,8 +24,7 @@ const NewsDetail = (props) => {
       <View style={{padding: 15, width: '100%'}}>
         <Image
           source={{
-            uri:
-              'https://giatien.net/thumb/1920x863/1/upload/hinhanh/untitled-2-2513.png',
+            uri: props?.route?.params?.item?.image,
           }}
           style={{width: '100%', minHeight: 207}}
         />
@@ -36,20 +35,19 @@ const NewsDetail = (props) => {
             marginBottom: 15,
             marginTop: 15,
           }}>
-          Dạy nấu ăn tại nhà đơn giản ngon miệng{' '}
+          {props?.route?.params?.item?.title}
         </Text>
         <View style={{flexDirection: 'row', marginBottom: 10}}>
           <FontAwesomeIcon
             style={{marginRight: 5, marginTop: 2}}
             icon={faHistory}
           />
-          <Text style={{fontWeight: '700'}}>12/11/2019</Text>
+          <Text style={{fontWeight: '700'}}>
+            {props?.route?.params?.item?.created_at}
+          </Text>
         </View>
         <Text style={{marginBottom: 25}}>
-          Cảm ơn các bạn đã dành tình cảm cho nhung sản phẩm của mình trong thời
-          gian qua và cho ca khúc này nói riêng. Cảm ơn tất cả nhung phản hồi,
-          góp ý cùng việc hỗ trợ mình chia sẻ những đứa con tinh thần đến với
-          cộng đồng nghe nhạc.
+          {props?.route?.params?.item?.body}
         </Text>
       </View>
     </View>

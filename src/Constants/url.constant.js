@@ -27,6 +27,7 @@ const API_BASE_URL = {
   ORDER_HISTORY: ROOT_DOMAIN + '/order/list',
 
   GET_LIST_NOTIFICATION: ROOT_DOMAIN + '/notification/list',
+  GET_NOTIFICATION_DETAIL: ROOT_DOMAIN + '/notification',
 };
 
 export {API_BASE_URL, ROOT_DOMAIN};

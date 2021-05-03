@@ -41,6 +41,13 @@ const service = {
     // console.log(params);
     return response;
   },
+  searchProduct: async (params, title, page) => {
+    let url = `${API_BASE_URL.GET_LIST_SERVICE}?title=${title}&page=${page}`;
+    // console.log('thai', url);
+    let response = callApiService.get(url, params);
+    // console.log(params);
+    return response;
+  },
 };
 
 export default service;

@@ -74,7 +74,6 @@ const Order = (props) => {
               text: 'Đồng ý',
               onPress: () => {
                 props.navigation.reset({
-                  index: 0,
                   routes: [{name: 'OrderHistoryScreen'}],
                 });
                 props.navigation.navigate('Home');

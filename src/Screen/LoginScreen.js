@@ -49,6 +49,10 @@ const LoginScreen = (props) => {
             storage.setItem('Authorization', response?.data.data.token);
             // console.log(response?.data?.data);
             props.navigation.navigate('TabNav');
+            props.navigation.reset({
+              index: 0,
+              routes: [{name: 'TabNav'}],
+            });
           } else {
             Alert.alert(
               'Thông báo',

@@ -1,8 +1,8 @@
 // Styles
 import styles from '../Styles/SplashScreenStyles';
 
-import React, {useEffect} from 'react';
-import {Image, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Image, Text, View, Alert} from 'react-native';
 import Images from '../../Theme/Images';
 import PhotoCamera from '../../Theme/img/photo-camera.svg';
 import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
@@ -16,8 +16,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Color from '../../Theme/Color';
 import ChangePass from '../../Theme/img/change_pass.svg';
+import services from '../../Redux/Service/userService';
 
-const ChangePassword = () => {
+const ChangePassword = (props) => {
+  const [oldPassword, setOldpassword] = useState('');
+
+  const [newPassword, setNewpassword] = useState('');
+
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+
   return (
     <View style={styles.container}>
       <View style={{padding: 15, alignItems: 'center'}}>
@@ -33,6 +40,9 @@ const ChangePassword = () => {
               height: 40,
             }}
             placeholder="Mật khẩu cũ"
+            onChangeText={(text) => setOldpassword(text)}
+            value={oldPassword}
+            secureTextEntry={true}
           />
           <View
             style={{
@@ -59,6 +69,9 @@ const ChangePassword = () => {
               height: 40,
             }}
             placeholder="Mật khẩu mới"
+            onChangeText={(text) => setNewpassword(text)}
+            value={newPassword}
+            secureTextEntry={true}
           />
           <View
             style={{
@@ -85,6 +98,9 @@ const ChangePassword = () => {
               height: 40,
             }}
             placeholder="Nhập lại mật khẩu mới"
+            onChangeText={(text) => setConfirmNewPassword(text)}
+            value={confirmNewPassword}
+            secureTextEntry={true}
           />
           <View
             style={{
@@ -99,7 +115,34 @@ const ChangePassword = () => {
           </View>
         </View>
 
-        <TouchableOpacity style={{marginTop: 30}}>
+        <TouchableOpacity
+          style={{marginTop: 30}}
+          onPress={() => {
+            var body = {
+              password_old: oldPassword,
+              password_new: newPassword,
+              password_new_confirmation: confirmNewPassword,
+            };
+            services.changePassWord(body).then(function (response) {
+              if (response) {
+                if (response.data.status_code === 200) {
+                  Alert.alert('Thông báo!', response.data.message, [
+                    {
+                      text: 'Đồng ý',
+                      onPress: () => {
+                        props.navigation.goBack();
+                      },
+                    },
+                  ]);
+                }
+              } else {
+                Alert.alert('Thông báo!', 'Đổi mật khẩu thất bại!', [
+                  {text: 'Đồng ý'},
+                ]);
+                return;
+              }
+            });
+          }}>
           <View
             style={{
               width: 120,

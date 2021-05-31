@@ -199,7 +199,7 @@ const ProductDetail = (props) => {
                 fontSize: 15,
                 borderBottomWidth: 1,
                 borderBottomColor: '#11111150',
-                paddingBottom: 10,
+                // paddingBottom: 10,
               }}>
               Thông số kỹ thuật
             </Text>

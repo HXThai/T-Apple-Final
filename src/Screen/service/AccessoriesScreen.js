@@ -188,7 +188,8 @@ const Product = (props) => {
 
   const handleLoadMore = () => {
     console.log('thai thai');
-    setPage(page + 1);
+    // setPage(page + 1);
+    dataProduct.length >= 10 ? setPage(page + 1) : null;
   };
 
   return (

@@ -1,7 +1,7 @@
 // Styles
 import styles from '../Styles/SplashScreenStyles';
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -27,8 +27,21 @@ import {
   faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
 import Color from '../../Theme/Color';
+import reactotron from 'reactotron-react-native';
 
-const PersonalDetail = () => {
+const PersonalDetail = (props) => {
+  const [name, setName] = useState(props.route.params.dataUser.name);
+
+  const [address, setAddress] = useState(props.route.params.dataUser.address);
+
+  const [phone, setPhone] = useState(props.route.params.dataUser.phone);
+
+  const [email, setEmail] = useState(props.route.params.dataUser.email);
+
+  useEffect(() => {
+    reactotron.log(props.route.params.dataUser);
+  }, []);
+
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView
@@ -36,7 +49,6 @@ const PersonalDetail = () => {
         style={{
           width: Dimensions.get('window').width,
           height: Dimensions.get('window').height,
-          // flex: 1,
           backgroundColor: '#FFFFFF',
           flexDirection: 'column',
         }}>
@@ -53,7 +65,7 @@ const PersonalDetail = () => {
                 <View style={{width: 90, height: 90}}>
                   <Image
                     style={{width: 89, height: 89, borderRadius: 100}}
-                    source={Images.imgNotifi}
+                    source={{uri: props.route.params.dataUser.link_avatar}}
                     resizeMode="center"
                   />
                   <View
@@ -85,24 +97,24 @@ const PersonalDetail = () => {
                   marginBottom: 25,
                   marginTop: 25,
                 }}>
-                <View style={{position: 'absolute', bottom: 15, left: 15}}>
+                <View style={{position: 'absolute', left: 15}}>
                   <FontAwesomeIcon
                     color="#898989"
                     icon={faUserEdit}
                     size={25}
                   />
                 </View>
-
                 <TextInput
                   style={{
                     width: '100%',
                     fontSize: 14,
                     textAlignVertical: 'center',
                     position: 'absolute',
-                    bottom: 0,
+                    bottom: 10,
                     left: 50,
                   }}
-                  value="Xuân Thái"
+                  onChangeText={(text) => setName(text)}
+                  value={name}
                 />
               </View>
 
@@ -114,7 +126,7 @@ const PersonalDetail = () => {
                   padding: 17,
                   marginBottom: 25,
                 }}>
-                <View style={{position: 'absolute', bottom: 15, left: 15}}>
+                <View style={{position: 'absolute', left: 15}}>
                   <FontAwesomeIcon
                     color="#898989"
                     icon={faMapMarkerAlt}
@@ -127,10 +139,11 @@ const PersonalDetail = () => {
                     fontSize: 14,
                     textAlignVertical: 'center',
                     position: 'absolute',
-                    bottom: 0,
+                    bottom: 15,
                     left: 50,
                   }}
-                  value="Mỹ Đình, Hà Nội"
+                  onChangeText={(text) => setAddress(text)}
+                  value={address}
                 />
               </View>
 
@@ -142,7 +155,7 @@ const PersonalDetail = () => {
                   padding: 17,
                   marginBottom: 25,
                 }}>
-                <View style={{position: 'absolute', bottom: 15, left: 15}}>
+                <View style={{position: 'absolute', left: 15}}>
                   <FontAwesomeIcon
                     color="#898989"
                     icon={faPhoneAlt}
@@ -155,10 +168,11 @@ const PersonalDetail = () => {
                     fontSize: 14,
                     textAlignVertical: 'center',
                     position: 'absolute',
-                    bottom: 0,
+                    bottom: 15,
                     left: 50,
                   }}
-                  value="098.783.5699"
+                  onChangeText={(text) => setPhone(text)}
+                  value={phone}
                 />
               </View>
 
@@ -170,7 +184,7 @@ const PersonalDetail = () => {
                   padding: 17,
                   marginBottom: 25,
                 }}>
-                <View style={{position: 'absolute', bottom: 15, left: 15}}>
+                <View style={{position: 'absolute', left: 15}}>
                   <FontAwesomeIcon
                     color="#898989"
                     icon={faEnvelope}
@@ -183,10 +197,11 @@ const PersonalDetail = () => {
                     fontSize: 14,
                     textAlignVertical: 'center',
                     position: 'absolute',
-                    bottom: 0,
+                    bottom: 15,
                     left: 50,
                   }}
-                  value="yangyo@gmail.com"
+                  onChangeText={(text) => setEmail(text)}
+                  value={email}
                 />
               </View>
 

@@ -9,6 +9,7 @@ export default StyleSheet.create({
     fontSize: 14,
     // fontFamily: 'Nunito',
     color: '#111111',
+    fontStyle: 'italic',
   },
   title: {
     fontSize: 16,
@@ -21,11 +22,19 @@ export default StyleSheet.create({
     // borderBottomWidth: 1,
     margin: 2,
     padding: 10,
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     marginBottom: 10,
     borderRadius: 8,
     backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 4,
   },
   viewImage: {
     backgroundColor: '#fff',

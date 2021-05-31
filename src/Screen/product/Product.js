@@ -37,26 +37,15 @@ const Product = (props) => {
     setDataProduct([]);
     setTab(value);
     setPage(1);
-    // console.log('page', page);
-    // getData(value);
-    // console.log(props.data.responseService);
-    // props.onGetListService({id: value, page: page});
-    // console.log(value);
     console.log('page', page);
     getData(value, page);
   };
-
-  // useEffect(() => {
-  //   // props.onGetCategories({});
-  //   props.onGetListService({id: 0, page: page});
-  // }, []);
 
   useEffect(() => {
     getCategories();
   }, []);
 
   useEffect(() => {
-    // setIsLoading(true);
     getData(tab, page);
     return () => {};
   }, [page]);
@@ -65,12 +54,9 @@ const Product = (props) => {
     services
       .getListService(null, id, page)
       .then(function (response) {
-        // props.onGetList(response?.data);
         if (response) {
           reactotron.log('thai', response);
           if (response.data.status_code === 200) {
-            // setDataProduct(response?.data?.data?.data);
-            // console.log(response.data.data.data);
             setDataProduct((prev) => [...prev, ...response?.data?.data?.data]);
           } else {
             Alert.alert('Thông báo!', response.data.message, [
@@ -84,19 +70,14 @@ const Product = (props) => {
         }
       })
       .then(function () {
-        // setIsLoadingMore(false);
         setIsLoading(false);
       });
   };
 
   const getCategories = () => {
     services.getCategoriesService(null).then(function (response) {
-      // props.onGetList(response?.data);
       if (response) {
-        // console.log(response);
         if (response.data.status_code === 200) {
-          // setDataProduct(response?.data?.data?.data);
-          // console.log(response.data.data.data);
           setDataTab(response?.data);
         }
       } else {
@@ -174,7 +155,8 @@ const Product = (props) => {
 
   const handleLoadMore = () => {
     // console.log('thai thai');
-    setPage(page + 1);
+    dataProduct.length >= 10 ? setPage(page + 1) : null;
+    // setPage(page + 1);
   };
 
   // const renderFooter = () => {
@@ -191,10 +173,8 @@ const Product = (props) => {
         style={{
           flexDirection: 'row',
           marginTop: 5,
-          // marginLeft: 5,
           padding: 5,
           alignItems: 'center',
-          // backgroundColor: '#fff',
           borderRadius: 4,
           justifyContent: 'space-around',
         }}>
@@ -216,7 +196,6 @@ const Product = (props) => {
                     style={{
                       borderColor: item.id === tab ? '#0000CD' : '#fff',
                       borderRadius: 5,
-                      // height: 35,
                       borderWidth: 1,
                       justifyContent: 'center',
                       alignItems: 'center',

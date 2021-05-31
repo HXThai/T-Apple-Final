@@ -19,6 +19,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginTop: 10,
   },
   views: {
     padding: 10,
@@ -35,5 +36,6 @@ export default StyleSheet.create({
     marginTop: 5,
     color: '#111111',
     borderRadius: 10,
+    height: 40,
   },
 });

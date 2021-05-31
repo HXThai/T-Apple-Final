@@ -11,4 +11,10 @@ export default registerService = {
     let response = callApiService.post(url, params);
     return response;
   },
+
+  forgotPassword: async (params) => {
+    let url = `${API_BASE_URL.FORGOT_PASSWORD}`;
+    let response = callApiService.post(url, params);
+    return response;
+  },
 };

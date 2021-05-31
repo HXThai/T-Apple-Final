@@ -8,7 +8,7 @@ const homeService = {
     let response = callApiService.get(url, params);
     return response;
   },
-  getListBanner: async (params = null) => {
+  getListBanner: async (params) => {
     let url = `${API_BASE_URL.GET_LIST_BANNER}`;
     let response = callApiService.get(url);
     return response;

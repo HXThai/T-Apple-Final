@@ -123,6 +123,9 @@ const getTabBarVisibility = (route) => {
   if (routename == 'SearchScreen') {
     return false;
   }
+  if (routename == 'NotificationDetailScreen') {
+    return false;
+  }
 
   return true;
 };
@@ -301,8 +304,8 @@ function ServiceStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -363,8 +366,8 @@ function PersonalStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -405,8 +408,8 @@ function PersonalStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -447,8 +450,8 @@ function PersonalStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -489,8 +492,8 @@ function PersonalStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -531,8 +534,8 @@ function PersonalStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -610,8 +613,8 @@ function HomeStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -657,8 +660,8 @@ function HomeStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -702,8 +705,8 @@ function HomeStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -745,8 +748,8 @@ function HomeStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -789,8 +792,8 @@ function HomeStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -832,8 +835,8 @@ function HomeStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -875,8 +878,8 @@ function HomeStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -918,8 +921,8 @@ function HomeStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -961,8 +964,8 @@ function HomeStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -1003,8 +1006,8 @@ function HomeStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -1045,8 +1048,8 @@ function HomeStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -1087,8 +1090,8 @@ function HomeStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -1131,8 +1134,8 @@ function HomeStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -1174,8 +1177,8 @@ function HomeStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -1224,8 +1227,8 @@ function NotificationStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>
@@ -1266,8 +1269,8 @@ function NotificationStack(props) {
               }}>
               <View style={{marginLeft: 15}}>
                 <MaterialIcons
-                  name={'keyboard-backspace'}
-                  size={30}
+                  name={'arrow-back-ios'}
+                  size={28}
                   color="#FFFFFF"
                 />
               </View>

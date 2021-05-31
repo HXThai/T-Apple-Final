@@ -28,6 +28,13 @@ const API_BASE_URL = {
 
   GET_LIST_NOTIFICATION: ROOT_DOMAIN + '/notification/list',
   GET_NOTIFICATION_DETAIL: ROOT_DOMAIN + '/notification',
+
+  FORGOT_PASSWORD: ROOT_DOMAIN + '/auth/forgot-password',
+
+  GET_WARRANTY: ROOT_DOMAIN + '/guarantee',
+  CHANGE_PASSWORD: ROOT_DOMAIN + '/profile/change-password',
+
+  SEND_FEEDBACK: ROOT_DOMAIN + '/feedback/store',
 };
 
 export {API_BASE_URL, ROOT_DOMAIN};

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   Image,
   Text,
@@ -8,6 +8,7 @@ import {
   ScrollView,
   ImageBackground,
   Dimensions,
+  RefreshControl,
 } from 'react-native';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -22,19 +23,22 @@ import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import services from '../../Redux/Service/notificationService';
 
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
 const NotificationScreen = (props) => {
   const [dataNotification, setDataNotification] = useState([]);
   var deviceWidth = Dimensions.get('window').width;
+
+  const [refreshing, setRefreshing] = useState(false);
 
   // const [data, setData] = useState([]);
 
   useEffect(() => {
     services.getListNotification({}).then(function (response) {
-      // props.onGetList(response?.data);
       if (response) {
-        // console.log(response);
         if (response.data.status_code === 200) {
-          // console.log(response?.data?.data?.data[0].product);
           setDataNotification(response?.data?.data?.data);
         }
       } else {
@@ -43,6 +47,23 @@ const NotificationScreen = (props) => {
       }
     });
   }, []);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    services.getListNotification({}).then(function (response) {
+      if (response) {
+        if (response.data.status_code === 200) {
+          setDataNotification(response?.data?.data?.data);
+        }
+      } else {
+        Alert.alert('Thông báo!', 'Lỗi!', [{text: 'Đồng ý'}]);
+        return;
+      }
+    });
+    wait(1000).then(() => {
+      setRefreshing(false);
+    });
+  });
 
   return (
     <LinearGradient
@@ -62,6 +83,9 @@ const NotificationScreen = (props) => {
             // marginBottom: 20,
           }}>
           <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
             showsVerticalScrollIndicator={false}
             style={{marginBottom: 20}}>
             <View

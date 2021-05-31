@@ -25,6 +25,7 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     lineHeight: 25,
+    // marginTop: 100,
   },
   phone: {
     marginTop: 20,

@@ -54,7 +54,7 @@ export default StyleSheet.create({
   text: {
     fontSize: 14,
     // fontFamily: 'Nunito',
-    color: '#111111',
+    // color: '#111111',
   },
   title: {
     fontSize: 16,

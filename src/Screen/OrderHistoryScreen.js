@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   Image,
   Text,
@@ -8,6 +8,7 @@ import {
   ScrollView,
   TextInput,
   Dimensions,
+  RefreshControl,
 } from 'react-native';
 import styles from './Styles/ServiceScreenStyle';
 import Images from '../Theme/Images';
@@ -16,52 +17,100 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import services from '../Redux/Service/orderService';
 
-const FLatlistItem = ({shop_name, date, address, avata, status}) => {
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
+const renderProduct = ({item}) => {
   return (
-    <View style={styles.viewItem}>
-      <View style={styles.viewImage}>
-        <Image
-          source={{uri: avata}}
-          style={{width: 50, height: 50, borderRadius: 999}}
-        />
-      </View>
+    <View
+      style={{
+        margin: 2,
+        padding: 10,
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginBottom: 10,
+        borderRadius: 8,
+        backgroundColor: '#fff',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 3,
+      }}>
       <View
         style={{
-          marginLeft: 10,
-          flex: 1,
-          height: 70,
-          justifyContent: 'space-around',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          width: '100%',
+          borderBottomWidth: 0.5,
+          borderBottomColor: Color.main,
+          paddingBottom: 8,
         }}>
-        <View style={styles.row}>
-          <Text style={[styles.title, {fontWeight: 'bold'}]} numberOfLines={1}>
-            {shop_name}
-          </Text>
-          <Text style={styles.text}>
-            {date === 1
-              ? 'Chờ xác nhận'
-              : date === 2
-              ? 'Đã xác nhận'
-              : date === 3
-              ? 'Đang giao hàng'
-              : date === 4
-              ? 'Hoàn thành'
-              : 'Đã hủy'}
-          </Text>
-        </View>
-        <Text style={styles.text}>{address}</Text>
-        {/* <View style={styles.row}>
-          {status === 0 ? (
-            <Text style={[styles.text, {color: Color.main}]}>Hoàn thành</Text>
-          ) : status === 1 ? (
-            <Text style={[styles.text, {color: 'gray'}]}>Đang xử lý</Text>
-          ) : (
-            <Text style={[styles.text, {color: 'red'}]}>Thất bại</Text>
-          )}
-          <TouchableOpacity>
-            <Text style={styles.text}>Xem chi tiết</Text>
-          </TouchableOpacity>
-        </View> */}
+        <Text>Mã đơn hàng: {item.code}</Text>
+        <Text style={styles.text}>
+          {item.status === 1
+            ? 'Chờ xác nhận'
+            : item.status === 2
+            ? 'Đã xác nhận'
+            : item.status === 3
+            ? 'Đang giao hàng'
+            : item.status === 4
+            ? 'Hoàn thành'
+            : 'Đã hủy'}
+        </Text>
       </View>
+      {item.product.map((itemProduct, index) => {
+        return (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderBottomWidth: 0.3,
+              borderBottomColor: Color.main,
+              paddingBottom: 5,
+            }}>
+            <View style={styles.viewImage}>
+              <Image
+                source={{uri: itemProduct.image}}
+                style={{width: 50, height: 50, borderRadius: 8}}
+              />
+            </View>
+            <View
+              style={{
+                marginLeft: 10,
+                flex: 1,
+                height: 70,
+                justifyContent: 'space-around',
+              }}>
+              <View
+                style={{
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  height: 50,
+                }}>
+                <Text
+                  style={[styles.title, {fontWeight: 'bold'}]}
+                  numberOfLines={1}>
+                  {itemProduct.title + ' - ' + itemProduct?.attribute?.rom}
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text>{styles.dynamicSort(itemProduct.price)} đ</Text>
+                  <Text>Số lượng: {itemProduct.amount}</Text>
+                </View>
+              </View>
+              {/* <Text style={styles.text}>{address}</Text> */}
+            </View>
+          </View>
+        );
+      })}
     </View>
   );
 };
@@ -69,14 +118,30 @@ const FLatlistItem = ({shop_name, date, address, avata, status}) => {
 const ServiceScreen = (props) => {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    services.oderHistory({}).then(function (response) {
-      // props.onGetList(response?.data);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    services.oderHistory(null).then(function (response) {
       if (response) {
-        // console.log(response);
         if (response.data.status_code === 200) {
-          // console.log(response?.data?.data?.data[0].product);
-          setData(response?.data?.data?.data[0].product);
+          setData(response?.data?.data?.data);
+        }
+      } else {
+        Alert.alert('Thông báo!', 'Lỗi!', [{text: 'Đồng ý'}]);
+        return;
+      }
+    });
+    wait(1000).then(() => {
+      setRefreshing(false);
+    });
+  });
+
+  useEffect(() => {
+    services.oderHistory(null).then(function (response) {
+      if (response) {
+        if (response.data.status_code === 200) {
+          setData(response?.data?.data?.data);
         }
       } else {
         Alert.alert('Thông báo!', 'Lỗi!', [{text: 'Đồng ý'}]);
@@ -86,23 +151,6 @@ const ServiceScreen = (props) => {
   }, []);
 
   return (
-    // <View style={styles.container}>
-    //   <FlatList
-    //     data={data}
-    //     renderItem={({item}) => (
-    //       <TouchableOpacity onPress={()=>props.navigation.navigate('ServiceDetail')}>
-    //         <FLatlistItem
-    //           shop_name={item.shop_name}
-    //           date={item.date}
-    //           address={item.address}
-    //           avata={item.avata}
-    //           status={item.status}
-    //         />
-    //       </TouchableOpacity>
-    //     )}
-    //     // keyExtractor={id}
-    //   />
-    // </View>
     <LinearGradient
       colors={[Color.gradientStart, Color.gradientMiddle, Color.gradientEnd]}
       start={{x: 0, y: 1}}
@@ -117,19 +165,15 @@ const ServiceScreen = (props) => {
             backgroundColor: '#FFFFFF',
             flexDirection: 'column',
             padding: 15,
-            paddingBottom: 30,
+            paddingBottom: 130,
           }}>
           <FlatList
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
             data={data}
-            renderItem={({item}) => (
-              <FLatlistItem
-                shop_name={item.title}
-                date={item.amount}
-                address={item.category_name}
-                avata={item.image}
-                status={item.status}
-              />
-            )}
+            renderItem={renderProduct}
             // keyExtractor={id}
           />
         </View>

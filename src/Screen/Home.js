@@ -29,11 +29,12 @@ import * as actionsSales from '../Redux/Action/salesAction';
 import * as actionsNews from '../Redux/Action/newsAction';
 import * as actionsService from '../Redux/Action/serviceAction';
 import * as actionsService_highlight from '../Redux/Action/service_highlightAction';
-
+import Swiper from 'react-native-swiper';
 import moment from 'moment';
 import services from '../Redux/Service/service';
 import salesService from '../Redux/Service/saleService';
 import {connect} from 'react-redux';
+import homeService from '../Redux/Service/homeService';
 
 // import Reactotron from 'reactotron-react-native';
 
@@ -88,15 +89,11 @@ const Home = (props) => {
 
   const [dataAccessories, setDataAccessories] = useState([]);
 
+  const [dataBanner, setDataBanner] = useState([]);
+
   // Reactotron.log(dataAccessories);
 
-  useEffect(() => {
-    (async () => {
-      const res = await services.getListAccessoriesHighlight(null, 4);
-      setDataAccessories(res.data.data);
-      // console.log('thaimeo', res.data.data);
-    })();
-  }, []);
+  useEffect(() => {}, []);
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -117,12 +114,28 @@ const Home = (props) => {
 
   const [salesData, setSalesData] = useState([]);
 
+  const [banner, setBanner] = useState([]);
+
   useEffect(() => {
     salesService.getListSalesHightlight(null, 3).then(function (response) {
       if (response) {
         // console.log('thai', response.data.data);
         if (response.data.status_code === 200) {
           setSalesData(response.data.data.data);
+        }
+      } else {
+        Alert.alert('Thông báo!', 'Lỗi!', [{text: 'Đồng ý'}]);
+        return;
+      }
+    });
+    (async () => {
+      const res = await services.getListAccessoriesHighlight(null, 4);
+      setDataAccessories(res.data.data);
+    })();
+    homeService.getListBanner(null).then(function (response) {
+      if (response) {
+        if (response.data.status_code === 200) {
+          setDataBanner(response.data.data);
         }
       } else {
         Alert.alert('Thông báo!', 'Lỗi!', [{text: 'Đồng ý'}]);
@@ -218,18 +231,40 @@ const Home = (props) => {
               style={[
                 styles.contend,
                 {
-                  marginBottom: 60,
+                  marginBottom: 40,
                 },
               ]}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{width: '100%', height: 200}}>
-                  <Image
-                    source={{
-                      uri:
-                        'https://giatien.net/thumb/1920x863/1/upload/hinhanh/untitled-2-2513.png',
-                    }}
-                    style={{width: '100%', height: '100%'}}
-                  />
+                  <Swiper
+                    style={{height: 200}}
+                    autoplay={true}
+                    loop={true}
+                    showsButtons={false}
+                    autoplayDirection={true}
+                    autoplayTimeout={2}
+                    activeDotColor={Color.main}>
+                    {dataBanner.map((item, index) => {
+                      return (
+                        <View
+                          testID="test"
+                          style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            height: 200,
+                            width: '100%',
+                          }}>
+                          <Image
+                            source={{
+                              uri: item.image,
+                            }}
+                            style={{width: '100%', height: '100%'}}
+                          />
+                        </View>
+                      );
+                    })}
+                  </Swiper>
+
                   <View
                     style={{
                       flexDirection: 'row',
@@ -311,18 +346,6 @@ const Home = (props) => {
                             width: '25%',
                             marginTop: 15,
                           }}>
-                          {/* <View
-                            style={{
-                              backgroundColor: '#fff',
-                              height: 50,
-                              width: 50,
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              elevation: 5,
-                              borderRadius: 5,
-                            }}>
-                            <Image source={item.image} />
-                          </View> */}
                           <View
                             style={{
                               height: 30,
@@ -503,11 +526,6 @@ const Home = (props) => {
                       return (
                         <TouchableOpacity
                           onPress={() => {
-                            // console.log('id home', item.id);
-                            // props.navigation.reset({
-                            //   index: 0,
-                            //   routes: [{name: 'ProductDetail'}],
-                            // });
                             props.navigation.navigate('ProductDetail', {
                               service_param: item.id,
                             });
@@ -517,7 +535,14 @@ const Home = (props) => {
                             width: '45%',
                             borderRadius: 4,
                             backgroundColor: '#fff',
-                            elevation: 5,
+                            shadowColor: '#000',
+                            shadowOffset: {
+                              width: 0,
+                              height: 4,
+                            },
+                            shadowOpacity: 0.32,
+                            shadowRadius: 5.46,
+                            elevation: 4,
                             marginBottom: 10,
                             marginTop: 10,
                           }}>
@@ -528,14 +553,10 @@ const Home = (props) => {
                             />
                           </View>
                           <View style={{padding: 10}}>
-                            <Text style={[styles.text, {fontWeight: '100'}]}>
+                            <Text style={{fontWeight: '500', color: 'black'}}>
                               {item.title}
                             </Text>
-                            <Text
-                              style={[
-                                styles.text,
-                                {fontSize: 12, color: 'gray'},
-                              ]}>
+                            <Text style={[styles.text, {fontSize: 12}]}>
                               Ram: {item?.attribute?.ram} - Rom:{' '}
                               {item?.attribute?.rom}
                             </Text>
@@ -552,7 +573,10 @@ const Home = (props) => {
                                   justifyContent: 'space-between',
                                 }}>
                                 <Text
-                                  style={[styles.text, {fontWeight: 'bold'}]}>
+                                  style={[
+                                    styles.text,
+                                    {fontWeight: 'bold', fontSize: 12},
+                                  ]}>
                                   {styles.dynamicSort(item?.price_sale) + ' đ'}
                                 </Text>
                                 <Text
@@ -560,7 +584,7 @@ const Home = (props) => {
                                     styles.text,
                                     {
                                       textDecorationLine: 'line-through',
-                                      fontSize: 12,
+                                      fontSize: 11,
                                     },
                                   ]}>
                                   {styles.dynamicSort(item.price) + ' đ'}
@@ -640,7 +664,14 @@ const Home = (props) => {
                             width: '45%',
                             borderRadius: 4,
                             backgroundColor: '#fff',
-                            elevation: 5,
+                            shadowColor: '#000',
+                            shadowOffset: {
+                              width: 0,
+                              height: 4,
+                            },
+                            shadowOpacity: 0.32,
+                            shadowRadius: 5.46,
+                            elevation: 4,
                             marginBottom: 10,
                             marginTop: 10,
                           }}>
@@ -651,16 +682,9 @@ const Home = (props) => {
                             />
                           </View>
                           <View style={{padding: 10}}>
-                            <Text style={[styles.text, {fontWeight: '100'}]}>
+                            <Text style={[styles.text, {fontWeight: '500'}]}>
                               {item.title}{' '}
                             </Text>
-                            {/* <Text
-                              style={[
-                                styles.text,
-                                {fontSize: 12, color: 'gray'},
-                              ]}>
-                              Số lượng: {item.number}
-                            </Text> */}
                             <View
                               style={{
                                 flexDirection: 'row',
@@ -674,7 +698,10 @@ const Home = (props) => {
                                   justifyContent: 'space-between',
                                 }}>
                                 <Text
-                                  style={[styles.text, {fontWeight: 'bold'}]}>
+                                  style={[
+                                    styles.text,
+                                    {fontWeight: 'bold', fontSize: 12},
+                                  ]}>
                                   {styles.dynamicSort(item.price_sale) + ' đ'}
                                 </Text>
                                 <Text
@@ -682,7 +709,7 @@ const Home = (props) => {
                                     styles.text,
                                     {
                                       textDecorationLine: 'line-through',
-                                      fontSize: 12,
+                                      fontSize: 11,
                                     },
                                   ]}>
                                   {styles.dynamicSort(item.price) + ' đ'}

@@ -26,14 +26,17 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Color from '../Theme/Color';
+import Modal from 'react-native-modal';
 
 const Personal = (props) => {
   const [dataUser, setDataUser] = useState({});
 
+  const [modalVisible, setModalVisible] = useState(false);
+
   useEffect(() => {
     storage.getItem('userLogin').then((data) => {
       if (data) {
-        console.log(data);
+        // console.log(data);
         setDataUser(data);
       } else {
       }
@@ -47,6 +50,26 @@ const Personal = (props) => {
       end={{x: 1, y: 1}}
       style={{flex: 1}}>
       <SafeAreaView>
+        <Modal
+          style={{alignItems: 'center', justifyContent: 'center'}}
+          onBackdropPress={() => setModalVisible(false)}
+          isVisible={modalVisible}>
+          <View
+            style={{
+              height: '50%',
+              width: '90%',
+              backgroundColor: '#fff',
+              borderRadius: 10,
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+            }}>
+            <Text style={{fontWeight: '700', fontSize: 18}}>
+              Thông tin liên hệ
+            </Text>
+            <Text></Text>
+          </View>
+        </Modal>
         <View
           style={{
             width: Dimensions.get('window').width,
@@ -124,7 +147,9 @@ const Personal = (props) => {
                 borderRadius: 6,
               }}>
               <Warranty width={20} height={20} />
-              <Text style={{fontSize: 14, marginLeft: 10}}>Bảo hành</Text>
+              <Text style={{fontSize: 14, marginLeft: 10}}>
+                Chính sách bảo hành
+              </Text>
             </TouchableOpacity>
 
             {/* <TouchableOpacity>
@@ -200,7 +225,7 @@ const Personal = (props) => {
               <Text style={{fontSize: 14, marginLeft: 10}}>Đánh giá app</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{
                 flexDirection: 'row',
                 // margin: 15,
@@ -222,9 +247,12 @@ const Personal = (props) => {
               }}>
               <Guide width={20} height={20} />
               <Text style={{fontSize: 14, marginLeft: 10}}>Hướng dẫn</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity
+              onPress={() => {
+                // setModalVisible(true);
+              }}
               style={{
                 flexDirection: 'row',
                 // margin: 15,

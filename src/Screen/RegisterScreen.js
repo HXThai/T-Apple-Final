@@ -16,6 +16,8 @@ import Color from '../Theme/Color';
 import styles from './Styles/RegisterScreenStyle';
 import LinearGradient from 'react-native-linear-gradient';
 import services from '../Redux/Service/registerService';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import reactotron from 'reactotron-react-native';
 
 const RegisterScreen = (props) => {
   const [phone, setPhone] = useState('');
@@ -47,12 +49,34 @@ const RegisterScreen = (props) => {
                       alignItems: 'center',
                       //   paddingBottom: 100,
                     }}>
-                    <View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        // alignItems: 'center',
+                        width: '100%',
+                      }}>
+                      <TouchableOpacity
+                        onPress={() => props.navigation.navigate('LoginScreen')}
+                        style={{marginLeft: 20}}>
+                        <MaterialIcons
+                          name={'arrow-back-ios'}
+                          size={26}
+                          color={Color.main}
+                        />
+                      </TouchableOpacity>
                       <Image
                         source={Images.logo}
                         // resizeMode="contain"
-                        style={{width: 150, height: 120}}
+                        style={{width: 120, height: 120}}
                       />
+                      <View style={{marginLeft: 20, width: 20, height: 20}}>
+                        {/* <MaterialIcons
+                          name={'arrow-back-ios'}
+                          size={26}
+                          color={null}
+                        /> */}
+                      </View>
                     </View>
                   </View>
                   <View>
@@ -108,7 +132,7 @@ const RegisterScreen = (props) => {
                           }}
                           placeholder="Mật khẩu"
                           placeholderTextColor="gray"
-                          // secureTextEntry={true}
+                          secureTextEntry={true}
                           onChangeText={(text) => setPassword(text)}
                           value={password}
                         />
@@ -125,7 +149,7 @@ const RegisterScreen = (props) => {
                           }}
                           placeholder="Nhập lại mật khẩu"
                           placeholderTextColor="gray"
-                          // secureTextEntry={true}
+                          secureTextEntry={true}
                           onChangeText={(text) => setConfirmPassword(text)}
                           value={confirmPassword}
                         />
@@ -147,8 +171,9 @@ const RegisterScreen = (props) => {
                           };
                           services.register(params).then(function (response) {
                             // props.onGetList(response?.data);
+                            // reactotron.log(response);
                             if (response) {
-                              console.log(response);
+                              reactotron.log(response);
                               if (response.data.status_code === 200) {
                                 Alert.alert(
                                   'Thông báo!',

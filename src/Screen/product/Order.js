@@ -18,6 +18,7 @@ import Images from '../../Theme/Images';
 import Color from '../../Theme/Color';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import services from '../../Redux/Service/orderService';
+import storage from './../asyncStorage/Storage';
 
 const Order = (props) => {
   const [check, setCheck] = useState(1);
@@ -27,6 +28,7 @@ const Order = (props) => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [address, setAddress] = useState('');
+  const [phone, setPhone] = useState('');
   // const data = props?.route?.params?.service_param || null;
 
   useEffect(() => {
@@ -35,16 +37,13 @@ const Order = (props) => {
     const dataProduct = props?.route?.params?.service_param || null;
     setData(dataProduct);
     dataProduct.forEach((element) => {
-      // console.log(element);
-      totalP += parseFloat(element.data.price_sale);
+      totalP +=
+        parseFloat(element.data.price_sale) *
+        parseFloat(element.product_amount);
       totalN += parseFloat(element.product_amount);
     });
-    // console.log(total);
     setTotalPrice(totalP);
     setTotalAmount(totalN);
-
-    // console.log(dataProduct);
-    // console.log(ttp);
   }, []);
 
   const handleOrder = () => {
@@ -60,12 +59,10 @@ const Order = (props) => {
     const params = {
       note: note,
       pay_method: '1',
-      address: address,
+      address: phone + ' - ' + address,
       products: newData,
     };
-    console.log(params);
     services.newOrder(params).then(function (response) {
-      // props.onGetList(response?.data);
       if (response) {
         console.log(response);
         if (response.data.status_code === 200) {
@@ -73,6 +70,7 @@ const Order = (props) => {
             {
               text: 'Đồng ý',
               onPress: () => {
+                storage.setItem('dataCart', []);
                 props.navigation.reset({
                   routes: [{name: 'OrderHistoryScreen'}],
                 });
@@ -80,6 +78,8 @@ const Order = (props) => {
               },
             },
           ]);
+        } else {
+          Alert.alert('Thông báo!', 'Đặt hàng thất bại!', [{text: 'Đồng ý'}]);
         }
       } else {
         Alert.alert('Thông báo!', 'Đặt hàng thất bại!', [{text: 'Đồng ý'}]);
@@ -175,12 +175,12 @@ const Order = (props) => {
 
         <View style={styles.views}>
           <View style={styles.row}>
-            <Text style={styles.title}>Tổng số lượng:</Text>
-            <Text style={styles.title}>{totalAmount}</Text>
+            <Text style={styles.text}>Tổng số lượng:</Text>
+            <Text style={styles.text}>{totalAmount}</Text>
           </View>
           <View style={styles.row}>
-            <Text style={styles.title}>Tổng tiền:</Text>
-            <Text style={[styles.title, {fontWeight: 'bold'}]}>
+            <Text style={styles.text}>Tổng tiền:</Text>
+            <Text style={[styles.text, {fontWeight: 'bold'}]}>
               {styles.dynamicSort(totalPrice)}đ
             </Text>
           </View>
@@ -195,6 +195,20 @@ const Order = (props) => {
               style={styles.input}
               onChangeText={(text) => setAddress(text)}
               value={address}
+            />
+          </View>
+        </View>
+
+        <View style={styles.views}>
+          <View style={styles.viewInput}>
+            <Text style={[styles.text, {fontWeight: 'bold'}]}>
+              Số điện thoại nhận hàng
+            </Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => setPhone(text)}
+              value={phone}
+              keyboardType={'number-pad'}
             />
           </View>
         </View>
@@ -242,6 +256,7 @@ const Order = (props) => {
                 marginTop: 15,
                 textAlignVertical: 'top',
                 borderRadius: 10,
+                height: 80,
               },
             ]}
             multiline={true}
